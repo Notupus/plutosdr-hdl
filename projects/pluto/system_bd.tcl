@@ -28,9 +28,9 @@ create_bd_port -dir I spi0_sdo_i
 create_bd_port -dir O spi0_sdo_o
 create_bd_port -dir I spi0_sdi_i
 
-create_bd_port -dir I -from 17 -to 0 gpio_i
-create_bd_port -dir O -from 17 -to 0 gpio_o
-create_bd_port -dir O -from 17 -to 0 gpio_t
+create_bd_port -dir I -from 24 -to 0 gpio_i
+create_bd_port -dir O -from 24 -to 0 gpio_o
+create_bd_port -dir O -from 24 -to 0 gpio_t
 
 create_bd_port -dir O spi_csn_o
 create_bd_port -dir I spi_csn_i
@@ -49,37 +49,35 @@ ad_ip_instance processing_system7 sys_ps7
 
 # ps7 settings
 
-ad_ip_parameter sys_ps7 CONFIG.PCW_PRESET_BANK0_VOLTAGE {LVCMOS 1.8V}
-ad_ip_parameter sys_ps7 CONFIG.PCW_PRESET_BANK1_VOLTAGE {LVCMOS 1.8V}
-ad_ip_parameter sys_ps7 CONFIG.PCW_PACKAGE_NAME clg225
+ad_ip_parameter sys_ps7 CONFIG.PCW_PRESET_BANK0_VOLTAGE {LVCMOS 3.3V}
+ad_ip_parameter sys_ps7 CONFIG.PCW_PRESET_BANK1_VOLTAGE {LVCMOS 2.5V}
+ad_ip_parameter sys_ps7 CONFIG.PCW_PACKAGE_NAME clg400
+ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_MIO_GPIO_ENABLE 1
+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_PERIPHERAL_ENABLE 1
+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_ENET0_IO "MIO 16 .. 27"
+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_GRP_MDIO_ENABLE 1
+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_GRP_MDIO_IO "MIO 52 .. 53"
+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET_RESET_SELECT "Separate reset pins"
+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_RESET_ENABLE 1
+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_RESET_IO "MIO 46"
 ad_ip_parameter sys_ps7 CONFIG.PCW_USE_S_AXI_HP1 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_USE_S_AXI_HP2 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_EN_CLK1_PORT 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_EN_RST1_PORT 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ 100.0
 ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ 200.0
+ad_ip_parameter sys_ps7 CONFIG.PCW_CRYSTAL_PERIPHERAL_FREQMHZ 50
 ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_IO 18
-ad_ip_parameter sys_ps7 CONFIG.PCW_EN_ENET0 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_PERIPHERAL_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_ENET0_IO {MIO 16 .. 27}
-ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_GRP_MDIO_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_GRP_MDIO_IO {MIO 52 .. 53}
+ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_IO 25
 ad_ip_parameter sys_ps7 CONFIG.PCW_SPI1_PERIPHERAL_ENABLE 0
 ad_ip_parameter sys_ps7 CONFIG.PCW_I2C0_PERIPHERAL_ENABLE 0
-ad_ip_parameter sys_ps7 CONFIG.PCW_UART1_PERIPHERAL_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_UART1_UART1_IO {MIO 12 .. 13}
+ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_PERIPHERAL_ENABLE 1
+ad_ip_parameter sys_ps7 CONFIG.PCW_SDIO_PERIPHERAL_FREQMHZ 50
+ad_ip_parameter sys_ps7 CONFIG.PCW_UART0_PERIPHERAL_ENABLE 1
+ad_ip_parameter sys_ps7 CONFIG.PCW_UART0_UART0_IO {MIO 14 .. 15}
 ad_ip_parameter sys_ps7 CONFIG.PCW_I2C1_PERIPHERAL_ENABLE 0
 ad_ip_parameter sys_ps7 CONFIG.PCW_QSPI_PERIPHERAL_ENABLE 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_QSPI_GRP_SINGLE_SS_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_PERIPHERAL_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_SD0_IO "MIO 40 .. 45"
-ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_CD_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_CD_IO "MIO 47"
-ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_47_PULLUP {enabled}
-ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_47_SLEW {slow}
-ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_POW_ENABLE    0
-ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_WP_ENABLE     0
 ad_ip_parameter sys_ps7 CONFIG.PCW_SPI0_PERIPHERAL_ENABLE 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_SPI0_SPI0_IO EMIO
 ad_ip_parameter sys_ps7 CONFIG.PCW_TTC0_PERIPHERAL_ENABLE 0
@@ -87,10 +85,8 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_USE_FABRIC_INTERRUPT 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_PERIPHERAL_ENABLE 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_MIO_GPIO_ENABLE 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_MIO_GPIO_IO MIO
-ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_RESET_IO {MIO 46}
+ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_RESET_IO {MIO 47}
 ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_RESET_ENABLE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_46_SLEW {slow}
-ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_46_PULLUP {enabled}
 ad_ip_parameter sys_ps7 CONFIG.PCW_IRQ_F2P_INTR 1
 ad_ip_parameter sys_ps7 CONFIG.PCW_IRQ_F2P_MODE REVERSE
 ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_0_PULLUP {enabled}
@@ -100,19 +96,49 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_11_PULLUP {enabled}
 ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_48_PULLUP {enabled}
 ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_49_PULLUP {disabled}
 ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_53_PULLUP {enabled}
+ad_ip_parameter sys_ps7 CONFIG.PCW_APU_PERIPHERAL_FREQMHZ 750
 
 # DDR MT41K256M16 HA-125 (32M, 16bit, 8banks)
 
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_PARTNO {MT41K256M16 RE-125}
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BUS_WIDTH {16 Bit}
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_USE_INTERNAL_VREF 0
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_WRITE_LEVEL 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_READ_GATE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_DATA_EYE 1
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_0 0.048
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_1 0.050
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY0 0.241
-ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY1 0.240
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_ACT_DDR_FREQ_MHZ 775
+# ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_PARTNO {MT41J256M16 RE-125}
+# Use Custom memory parameters to allow tuning DDR timings.
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_PARTNO {Custom}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BANK_ADDR_COUNT {3}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_ROW_ADDR_COUNT {15}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_COL_ADDR_COUNT {10}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_CL {10}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_CWL {7}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_T_RCD {10}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_T_RP {10}
+# Increase DDR timing parameters to allow more DDR overclock.
+# Tested 7-5-7-7 for 625 MHz, 8-6-8-8 for 700 MHz, 9-7-9-9 for 750 MHz, 10-7-10-10 for 775 MHz.
+# ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_CL {10}
+# ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_CWL {7}
+# ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_T_RCD {10}
+# ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_T_RP {10}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_T_RC {48.91}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_T_RAS_MIN {35.0}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_T_FAW {40.0}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_0 {0.048}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_DQS_TO_CLK_DELAY_1 {0.050}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY0 {0.241}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BOARD_DELAY1 {0.240}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_ECC {Disabled}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BUS_WIDTH {32 Bit}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_DRAM_WIDTH {16 Bits}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_DEVICE_CAPACITY {4096 MBits}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_SPEED_BIN {DDR3_1066F}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_WRITE_LEVEL {1}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_READ_GATE {1}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_DATA_EYE {1}
+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_USE_INTERNAL_VREF {0}
+
+# ad_ip_parameter sys_ps7 CONFIG.PCW_OVERRIDE_BASIC_CLOCK 1
+# ad_ip_parameter sys_ps7 CONFIG.PCW_CPU_PERIPHERAL_DIVISOR0 3
+# ad_ip_parameter sys_ps7 CONFIG.PCW_ARMPLL_CTRL_FBDIV 52
+# ad_ip_parameter sys_ps7 CONFIG.PCW_DDR_PERIPHERAL_DIVISOR0 3
+# ad_ip_parameter sys_ps7 CONFIG.PCW_DDRPLL_CTRL_FBDIV 32
 
 ad_ip_instance xlconcat sys_concat_intc
 ad_ip_parameter sys_concat_intc CONFIG.NUM_PORTS 16
@@ -439,7 +465,7 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_USE_S_AXI_HP1 {1}
 ad_connect sys_cpu_clk sys_ps7/S_AXI_HP1_ACLK
 ad_connect axi_ad9361_adc_dma/m_dest_axi sys_ps7/S_AXI_HP1
 
-create_bd_addr_seg -range 0x20000000 -offset 0x00000000 \
+create_bd_addr_seg -range 0x40000000 -offset 0x00000000 \
                     [get_bd_addr_spaces axi_ad9361_adc_dma/m_dest_axi] \
                     [get_bd_addr_segs sys_ps7/S_AXI_HP1/HP1_DDR_LOWOCM] \
                     SEG_sys_ps7_HP1_DDR_LOWOCM
@@ -448,7 +474,7 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_USE_S_AXI_HP2 {1}
 ad_connect sys_cpu_clk sys_ps7/S_AXI_HP2_ACLK
 ad_connect axi_ad9361_dac_dma/m_src_axi sys_ps7/S_AXI_HP2
 
-create_bd_addr_seg -range 0x20000000 -offset 0x00000000 \
+create_bd_addr_seg -range 0x40000000 -offset 0x00000000 \
                     [get_bd_addr_spaces axi_ad9361_dac_dma/m_src_axi] \
                     [get_bd_addr_segs sys_ps7/S_AXI_HP2/HP2_DDR_LOWOCM] \
                     SEG_sys_ps7_HP2_DDR_LOWOCM

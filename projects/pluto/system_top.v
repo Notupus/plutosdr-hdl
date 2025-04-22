@@ -1,6 +1,6 @@
 // ***************************************************************************
 // ***************************************************************************
-// Copyright (C) 2014-2023 Analog Devices, Inc. All rights reserved.
+// Copyright 2014 - 2017 (c) Analog Devices, Inc. All rights reserved.
 //
 // In this HDL repository, there are many different and unique modules, consisting
 // of various HDL (Verilog or VHDL) components. The individual modules are
@@ -44,10 +44,10 @@ module system_top (
   inout           ddr_ck_p,
   inout           ddr_cke,
   inout           ddr_cs_n,
-  inout   [ 1:0]  ddr_dm,
-  inout   [15:0]  ddr_dq,
-  inout   [ 1:0]  ddr_dqs_n,
-  inout   [ 1:0]  ddr_dqs_p,
+  inout   [ 3:0]  ddr_dm,
+  inout   [31:0]  ddr_dq,
+  inout   [ 3:0]  ddr_dqs_n,
+  inout   [ 3:0]  ddr_dqs_p,
   inout           ddr_odt,
   inout           ddr_ras_n,
   inout           ddr_reset_n,
@@ -55,11 +55,14 @@ module system_top (
 
   inout           fixed_io_ddr_vrn,
   inout           fixed_io_ddr_vrp,
-  inout   [31:0]  fixed_io_mio,
+  inout   [53:0]  fixed_io_mio,
   inout           fixed_io_ps_clk,
   inout           fixed_io_ps_porb,
   inout           fixed_io_ps_srstb,
 
+  inout           iic_scl,
+  inout           iic_sda,
+  
   input           rx_clk_in,
   input           rx_frame_in,
   input   [11:0]  rx_data_in,
@@ -81,34 +84,21 @@ module system_top (
   output          spi_mosi,
   input           spi_miso,
 
-  output          pl_gpio0,
-  input           pl_gpio1,
-  inout           pl_gpio2,
-  inout           pl_gpio3,
-  inout           pl_gpio4
-);
+  output          pl_spi_clk_o,
+  output          pl_spi_mosi,
+  input           pl_spi_miso
+ 
+  );
 
   // internal signals
 
-  wire    [17:0]  gpio_i;
-  wire    [17:0]  gpio_o;
-  wire    [17:0]  gpio_t;
-
-  wire            iic_scl;
-  wire            iic_sda;
-  wire            phaser_enable;
-  wire            pl_burst;
-  wire            pl_muxout;
-  wire            pl_spi_clk_o;
-  wire            pl_spi_miso;
-  wire            pl_spi_mosi;
-  wire            pl_txdata;
+  wire    [24:0]  gpio_i;
+  wire    [24:0]  gpio_o;
+  wire    [24:0]  gpio_t;
 
   // instantiations
 
-  ad_iobuf #(
-    .DATA_WIDTH(14)
-  ) i_iobuf (
+  ad_iobuf #(.DATA_WIDTH(14)) i_iobuf (
     .dio_t (gpio_t[13:0]),
     .dio_i (gpio_o[13:0]),
     .dio_o (gpio_i[13:0]),
@@ -118,27 +108,6 @@ module system_top (
               gpio_status}));     //  7: 0
 
   assign gpio_i[16:14] = gpio_o[16:14];
-  assign gpio_i[17] = pl_muxout;
-  assign phaser_enable = gpio_o[14];
-
-  assign pl_gpio4 = iic_scl;      //PL_GPIO4
-  assign pl_gpio3 = iic_sda;      //PL_GPIO3
-
-  //PL_GPIO2
-  ad_iobuf #(
-    .DATA_WIDTH(1)
-  ) i_pl_gpio_iobuf (
-    .dio_t (phaser_enable),
-    .dio_i (pl_spi_clk_o),
-    .dio_o (pl_muxout),
-    .dio_p (pl_gpio2));
-
-  //PL_GPIO1
-  assign pl_spi_miso = pl_gpio1 & ~phaser_enable;
-  assign pl_burst    = pl_gpio1 &  phaser_enable;
-
-  //PL_GPIO0
-  assign pl_gpio0 = phaser_enable ? pl_txdata : pl_spi_mosi;
 
   system_wrapper i_system_wrapper (
     .ddr_addr (ddr_addr),
@@ -181,7 +150,7 @@ module system_top (
     .spi0_sdi_i (spi_miso),
     .spi0_sdo_i (1'b0),
     .spi0_sdo_o (spi_mosi),
-
+    
     .spi_clk_i(1'b0),
     .spi_clk_o(pl_spi_clk_o),
     .spi_csn_i(1'b1),
@@ -198,3 +167,6 @@ module system_top (
     .up_txnrx (gpio_o[16]));
 
 endmodule
+
+// ***************************************************************************
+// ***************************************************************************
